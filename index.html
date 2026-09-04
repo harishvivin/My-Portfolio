@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" :class="{'dark':dark}" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Harish Vivin — AI Engineer specializing in LLMs, Generative AI, Machine Learning, and intelligent applications.">
+  <meta name="keywords"
+    content="AI engineer, machine learning, LLM, generative AI, portfolio, Python, PyTorch, LangChain">
+  <meta name="author" content="Harish Vivin">
+  <meta property="og:title" content="Harish Vivin — AI Engineer">
+  <meta property="og:description" content="Building intelligent systems with AI — one model at a time.">
+  <meta property="og:type" content="website">
+  <title>Harish Vivin — AI Engineer &amp; ML Researcher</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['Inter', 'sans-serif'] },
+          colors: { accent: '#FF6B2B', 'accent-light': '#FF8F5C' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      font-family: 'Inter', sans-serif
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Space Grotesk', sans-serif
+    }
+
+    body {
+      transition: background-color .3s, color .3s
+    }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .25;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #FF6B2B;
+      border-radius: 99px
+    }
+
+    /* reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .6s cubic-bezier(.4, 0, .2, 1), transform .6s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .08s
+    }
+
+    .d2 {
+      transition-delay: .16s
+    }
+
+    .d3 {
+      transition-delay: .24s
+    }
+
+    .d4 {
+      transition-delay: .32s
+    }
+
+    /* nav underline animation */
+    .nl {
+      position: relative
+    }
+
+    .nl::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: currentColor;
+      transition: width .22s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .nl:hover::after,
+    .nl.on::after {
+      width: 100%
+    }
+
+    .nl.on {
+      font-weight: 500
+    }
+
+    /* shimmer button */
+    .shimmer {
+      position: relative;
+      overflow: hidden
+    }
+
+    .shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: rgba(255, 255, 255, .18);
+      transform: skewX(-20deg);
+      transition: left .4s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .shimmer:hover::after {
+      left: 160%
+    }
+
+    /* photo frames */
+    .pf {
+      overflow: hidden;
+      background: #d4d4d8
+    }
+
+    .pf img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    /* card hover */
+    .card-h {
+      transition: transform .28s cubic-bezier(.4, 0, .2, 1), border-color .18s
+    }
+
+    .card-h:hover {
+      transform: translateY(-4px)
+    }
+
+    /* skill tag */
+    .stag {
+      transition: border-color .18s, background .18s
+    }
+
+    .stag:hover {
+      border-color: #FF6B2B;
+      background: rgba(255, 107, 43, .07)
+    }
+
+    [x-cloak] {
+      display: none !important
+    }
+
+    /* typing cursor */
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: #FF6B2B;
+      margin-left: 2px;
+      animation: blink .75s step-end infinite;
+      vertical-align: middle
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0
+      }
+    }
+
+    /* neural canvas */
+    #neural-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .45
+    }
+
+    /* proficiency bar */
+    .prof-bar {
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(255, 107, 43, .15);
+      overflow: hidden
+    }
+
+    .prof-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF6B2B, #FF8F5C);
+      border-radius: 99px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .prof-bar-fill.animated {
+      width: var(--w)
+    }
+
+    /* grid dots */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(255, 107, 43, .10) 1px, transparent 1px);
+      background-size: 28px 28px
+    }
+
+    /* glow effect */
+    .glow-accent {
+      box-shadow: 0 0 30px rgba(255, 107, 43, .2), 0 0 80px rgba(255, 107, 43, .05)
+    }
+
+    /* tech icon badge */
+    .tech-badge {
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .tech-badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 107, 43, .2)
+    }
+
+    /* section gradient divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 107, 43, .3), transparent)
+    }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased">
+
+  <!-- ═══ NAV ═══ -->
+  <header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+    :class="sc?'bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm shadow-black/5':''">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+
+      <a href="#hero" class="font-display font-bold text-xl tracking-tight relative z-10">
+        <span class="text-zinc-900 dark:text-white">Harish</span><span class="text-accent">vivin</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-8 text-sm" role="list">
+        <li><a href="#expertise"
+            class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            :class="s==='expertise'?'on !text-zinc-900 dark:!text-white':''">Expertise</a></li>
+        <li><a href="#projects"
+            class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            :class="s==='projects'?'on !text-zinc-900 dark:!text-white':''">Projects</a></li>
+        <li><a href="#stack"
+            class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            :class="s==='stack'?'on !text-zinc-900 dark:!text-white':''">Stack</a></li>
+        <li><a href="#about"
+            class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            :class="s==='about'?'on !text-zinc-900 dark:!text-white':''">About</a></li>
+        <li><a href="#contact"
+            class="nl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+            :class="s==='contact'?'on !text-zinc-900 dark:!text-white':''">Contact</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <!-- dark toggle -->
+        <button @click="dark=!dark"
+          class="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+          :aria-label="dark?'Light mode':'Dark mode'">
+          <svg x-show="!dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+          <svg x-show="dark" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        </button>
+        <!-- hamburger -->
+        <button @click="mm=!mm"
+          class="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-800"
+          :aria-expanded="mm" aria-label="Toggle menu">
+          <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg x-show="mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- mobile menu -->
+    <div x-show="mm" x-cloak x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 -translate-y-2"
+      class="md:hidden bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+      <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
+        <li><a href="#expertise" @click="mm=false"
+            class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Expertise</a></li>
+        <li><a href="#projects" @click="mm=false"
+            class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Projects</a></li>
+        <li><a href="#stack" @click="mm=false"
+            class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Stack</a></li>
+        <li><a href="#about" @click="mm=false"
+            class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">About</a></li>
+        <li><a href="#contact" @click="mm=false"
+            class="block text-zinc-700 dark:text-zinc-300 hover:text-accent transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══ HERO ═══ -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden dot-grid">
+      <canvas id="neural-canvas"></canvas>
+      <div class="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"
+        aria-hidden="true"></div>
+      <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none"
+        aria-hidden="true"></div>
+
+      <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+          <div>
+            <div class="reveal flex items-center gap-2 mb-6">
+              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              <p class="text-sm font-medium text-accent tracking-widest uppercase">Open to AI Roles</p>
+            </div>
+            <h1
+              class="reveal d1 font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-zinc-900 dark:text-white mb-4">
+              Hi, I'm <span class="text-accent">Harish Vivin</span>
+            </h1>
+            <div
+              class="reveal d2 flex items-center gap-2 text-xl md:text-2xl text-zinc-500 dark:text-zinc-400 font-light mb-4">
+              <span id="typing-text" class="font-medium text-zinc-700 dark:text-zinc-300"></span><span
+                class="cursor"></span>
+            </div>
+            <p class="reveal d2 text-base md:text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10">
+              Building intelligent systems, scalable ML pipelines, and LLM-powered applications that solve real-world
+              problems.
+            </p>
+            <div class="reveal d3 flex flex-wrap gap-4">
+              <a href="#projects"
+                class="shimmer inline-flex items-center gap-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors text-sm">
+                View my work
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              <a href="#contact"
+                class="inline-flex items-center gap-2 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium px-7 py-3.5 rounded-full hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-sm">Get
+                in touch</a>
+            </div>
+            <div class="reveal d4 flex gap-8 mt-14 pt-8 border-t border-zinc-100 dark:border-zinc-900">
+              <div>
+                <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">1+</p>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">AI Project</p>
+              </div>
+              <div>
+                <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">3+</p>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Years Learning</p>
+              </div>
+              <div>
+                <p class="font-display font-bold text-3xl text-zinc-900 dark:text-white">10+</p>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">AI Tools Used</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal d2 flex justify-center md:justify-end">
+            <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+              <!-- animated ring borders -->
+              <div class="absolute -inset-3 rounded-3xl border border-accent/20 animate-pulse"></div>
+              <div class="absolute -inset-6 rounded-3xl border border-accent/10"></div>
+              <!-- AI code visual card -->
+              <div
+                class="w-full h-full rounded-3xl glow-accent bg-zinc-900 dark:bg-zinc-800 border border-zinc-800 flex flex-col overflow-hidden">
+                <!-- terminal top bar -->
+                <div class="flex items-center gap-1.5 px-4 py-3 bg-zinc-950/60 border-b border-zinc-800 shrink-0">
+                  <span class="w-3 h-3 rounded-full bg-red-500/70"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-500/70"></span>
+                  <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
+                  <span class="ml-3 text-xs text-zinc-500 font-mono">ai_engineer.py</span>
+                </div>
+                <!-- code body -->
+                <div class="flex-1 p-5 font-mono text-xs leading-6 overflow-hidden select-none" aria-hidden="true">
+                  <p><span class="text-purple-400">from</span> <span class="text-zinc-300">google</span> <span
+                      class="text-purple-400">import</span> <span class="text-yellow-300">genai</span></p>
+                  <p><span class="text-purple-400">import</span> <span class="text-zinc-300">fitz</span><span
+                      class="text-zinc-500">, sklearn, fastapi</span></p>
+                  <p class="mt-2"><span class="text-zinc-600"># build intelligent systems</span></p>
+                  <p><span class="text-blue-400">class</span> <span class="text-yellow-300">HarishVivin</span><span
+                      class="text-zinc-300">(AIEngineer):</span></p>
+                  <p class="pl-4"><span class="text-blue-400">def</span> <span
+                      class="text-green-400">__init__</span><span class="text-zinc-300">(self):</span></p>
+                  <p class="pl-8 text-zinc-400">self.stack = [</p>
+                  <p class="pl-12"><span class="text-orange-400">"Gemini API"</span><span class="text-zinc-500">, </span><span
+                      class="text-orange-400">"PyMuPDF"</span><span class="text-zinc-500">,</span></p>
+                  <p class="pl-12"><span class="text-orange-400">"TF-IDF"</span><span class="text-zinc-500">,
+                    </span><span class="text-orange-400">"FastAPI"</span><span class="text-zinc-500">,</span></p>
+                  <p class="pl-12"><span class="text-orange-400">"React+Vite"</span><span class="text-zinc-500">,
+                    </span><span class="text-orange-400">"Pillow"</span></p>
+                  <p class="pl-8 text-zinc-400">]</p>
+                  <p class="pl-4 mt-1"><span class="text-blue-400">def</span> <span
+                      class="text-green-400">build</span><span class="text-zinc-300">(self, idea):</span></p>
+                  <p class="pl-8 text-zinc-400"><span class="text-purple-400">return</span> <span
+                      class="text-orange-400">"Medical Report AI"</span> <span class="text-accent">✓</span></p>
+                  <p class="mt-3 text-accent animate-pulse">█</p>
+                </div>
+              </div>
+              <div
+                class="absolute -bottom-4 -left-4 bg-accent text-white font-display font-bold text-xs px-4 py-2.5 rounded-2xl shadow-lg flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+                </svg>
+                AI Engineer
+              </div>
+              <div
+                class="absolute -top-4 -right-4 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-display font-bold text-xs px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5">
+                <span>🤖</span> LLM Builder
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ EXPERTISE ═══ -->
+    <section id="expertise" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-14">
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">What I do</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Expertise</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <article
+            class="reveal d1 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">PDF Intelligence &amp; Spatial OCR</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">Parsing complex medical documents with <strong class="text-zinc-700 dark:text-zinc-300">PyMuPDF (fitz)</strong> to extract visual rows, text lines, and exact 2D bounding boxes for spatial layout reconstruction.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">PyMuPDF (fitz)</span>
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">Row Alignment</span>
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">Bounding Boxes</span>
+            </div>
+          </article>
+
+          <article
+            class="reveal d2 card-h group bg-zinc-900 dark:bg-zinc-800 rounded-2xl p-8 border border-zinc-800 hover:border-accent">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-zinc-800 dark:bg-zinc-700 rounded-xl mb-6 group-hover:bg-accent/20 transition-colors">
+              <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-white mb-3">Retrieval &amp; Gemini Reasoning</h3>
+            <p class="text-sm text-zinc-400 leading-relaxed">Two-stage pipeline: <strong class="text-white">TF-IDF + Scikit-Learn</strong> for fast candidate page ranking, fused with <strong class="text-white">Google Gemini API</strong> for structured JSON answers and matched-line localization.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span
+                class="text-xs bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full border border-zinc-700">Google Gemini API</span>
+              <span
+                class="text-xs bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full border border-zinc-700">TF-IDF + Scikit-Learn</span>
+              <span
+                class="text-xs bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full border border-zinc-700">Structured JSON</span>
+            </div>
+          </article>
+
+          <article
+            class="reveal d3 card-h group bg-white dark:bg-zinc-900 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800 hover:border-accent">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-orange-50 dark:bg-zinc-800 rounded-xl mb-6 group-hover:bg-accent/10 transition-colors">
+              <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-display font-bold text-xl text-zinc-900 dark:text-white mb-3">Cropper Engine &amp; Full-Stack AI</h3>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">High-resolution 2.5x PNG snippet cropping with green highlights via <strong class="text-zinc-700 dark:text-zinc-300">Pillow + PyMuPDF Pixmap</strong>, served via asynchronous <strong class="text-zinc-700 dark:text-zinc-300">FastAPI + Uvicorn</strong> &amp; a responsive <strong class="text-zinc-700 dark:text-zinc-300">React + Vite + Tailwind</strong> UI.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">Pillow Pixmap</span>
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">FastAPI + Uvicorn</span>
+              <span
+                class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent px-2.5 py-1 rounded-full border border-orange-100 dark:border-zinc-700">React + Vite</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section id="projects" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
+          <div>
+            <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Portfolio</p>
+            <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">AI Projects
+            </h2>
+          </div>
+        </div>
+
+        <!-- single full-width featured project -->
+        <div class="reveal d1">
+          <article
+            class="group rounded-3xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-accent transition-all duration-300 shadow-lg hover:shadow-accent/10">
+
+            <!-- ── image carousel ── -->
+            <div class="relative w-full overflow-hidden bg-zinc-950 select-none" style="aspect-ratio:16/7"
+              x-data="{slide:0,slides:['assets/medical-upload.jpg','assets/medical-qa.jpg'],labels:['Upload Screen','Q&A Screen']}">
+
+              <!-- slides -->
+              <template x-for="(src,i) in slides" :key="i">
+                <div class="absolute inset-0 transition-opacity duration-500"
+                  :style="'opacity:'+(slide===i?'1':'0')+';pointer-events:'+(slide===i?'auto':'none')">
+                  <img :src="src" :alt="labels[i]" class="w-full h-full object-cover object-top" loading="lazy">
+                </div>
+              </template>
+
+              <!-- Featured badge -->
+              <div
+                class="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md z-10">
+                Featured · Real Project</div>
+
+              <!-- slide label pill -->
+              <div
+                class="absolute top-4 right-4 z-10 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700 text-white text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                <span x-text="labels[slide]"></span>
+              </div>
+
+              <!-- prev / next arrows -->
+              <button @click="slide=(slide-1+slides.length)%slides.length"
+                class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-zinc-900/70 backdrop-blur-sm border border-zinc-700 rounded-full hover:bg-accent hover:border-accent transition-colors"
+                aria-label="Previous screenshot">
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button @click="slide=(slide+1)%slides.length"
+                class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-zinc-900/70 backdrop-blur-sm border border-zinc-700 rounded-full hover:bg-accent hover:border-accent transition-colors"
+                aria-label="Next screenshot">
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <!-- dot indicators -->
+              <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
+                <template x-for="(src,i) in slides" :key="i">
+                  <button @click="slide=i" class="transition-all duration-300 rounded-full"
+                    :class="slide===i ? 'w-6 h-2 bg-accent' : 'w-2 h-2 bg-white/50 hover:bg-white/80'"
+                    :aria-label="'Go to screenshot '+(i+1)">
+                  </button>
+                </template>
+              </div>
+            </div>
+
+            <!-- ── card content ── -->
+            <div class="p-8 md:p-10">
+              <div class="flex flex-col md:flex-row md:items-start gap-6">
+
+                <!-- left: title + description -->
+                <div class="flex-1">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                      class="text-xs bg-orange-50 dark:bg-zinc-800 text-accent border border-orange-200 dark:border-zinc-700 px-3 py-1 rounded-full">Google Gemini API</span>
+                    <span
+                      class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">PyMuPDF (fitz)</span>
+                    <span
+                      class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">TF-IDF + Scikit-Learn</span>
+                    <span
+                      class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">FastAPI + Uvicorn</span>
+                    <span
+                      class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full">React + Vite + Tailwind</span>
+                  </div>
+                  <h3 class="font-display font-bold text-2xl md:text-3xl text-zinc-900 dark:text-white mb-3">Medical
+                    Report Extract AI</h3>
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-6">
+                    An intelligent medical document intelligence system that performs <strong
+                      class="text-zinc-700 dark:text-zinc-300">natural language Q&amp;A</strong> over uploaded medical
+                    report PDFs with exact bounding-box screenshot snippet extraction.
+                    <br><br>
+                    Upload any PDF — blood tests, discharge summaries, ECG diagnostics, radiology or lipid profiles —
+                    and ask questions in plain English. The system extracts precise answers and visually highlights the
+                    exact region of the report that contains the information.
+                  </p>
+
+                  <!-- feature pills -->
+                  <div class="flex flex-wrap gap-2 mb-6" aria-label="Features">
+                    <span
+                      class="inline-flex items-center gap-1.5 text-xs bg-blue-50 dark:bg-zinc-800 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-zinc-700 px-3 py-1.5 rounded-full">
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      PDF Upload & Parsing
+                    </span>
+                    <span
+                      class="inline-flex items-center gap-1.5 text-xs bg-purple-50 dark:bg-zinc-800 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-zinc-700 px-3 py-1.5 rounded-full">
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                      </svg>
+                      Natural Language Q&amp;A
+                    </span>
+                    <span
+                      class="inline-flex items-center gap-1.5 text-xs bg-green-50 dark:bg-zinc-800 text-green-600 dark:text-green-400 border border-green-100 dark:border-zinc-700 px-3 py-1.5 rounded-full">
+                      <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      Exact Bounding Box Snippets
+                    </span>
+                    <span
+                      class="inline-flex items-center gap-1.5 text-xs bg-orange-50 dark:bg-zinc-800 text-orange-600 dark:text-orange-400 border border-orange-100 dark:border-zinc-700 px-3 py-1.5 rounded-full">
+                      ⚡ Production Ready
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-5">
+                    <a href="#"
+                      class="shimmer inline-flex items-center gap-1.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-medium text-sm px-5 py-2.5 rounded-full hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors">
+                      View project
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
+                    <a href="#"
+                      class="inline-flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                      </svg>
+                      GitHub
+                    </a>
+                  </div>
+                </div>
+
+                <!-- right: mini screenshot switcher labels -->
+                <div class="md:w-48 shrink-0 flex md:flex-col gap-3" x-data="{}" x-init="">
+                  <button @click="$dispatch('slide-change',{slide:0})"
+                    onclick="document.querySelector('[x-data*=slides]').__x.$data.slide=0"
+                    class="flex items-center gap-3 p-3 rounded-xl border text-left transition-all text-xs"
+                    :class="/* always highlight first by default */ 'border-zinc-200 dark:border-zinc-700 hover:border-accent bg-white dark:bg-zinc-800'">
+                    <span
+                      class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-zinc-700 flex items-center justify-center shrink-0">📤</span>
+                    <span class="font-medium text-zinc-700 dark:text-zinc-300">Upload Screen</span>
+                  </button>
+                  <button onclick="document.querySelector('[x-data*=slides]').__x.$data.slide=1"
+                    class="flex items-center gap-3 p-3 rounded-xl border text-left transition-all text-xs border-zinc-200 dark:border-zinc-700 hover:border-accent bg-white dark:bg-zinc-800">
+                    <span
+                      class="w-8 h-8 rounded-lg bg-purple-50 dark:bg-zinc-700 flex items-center justify-center shrink-0">🧠</span>
+                    <span class="font-medium text-zinc-700 dark:text-zinc-300">Q&amp;A Screen</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ TECH STACK ═══ -->
+    <section id="stack" class="py-24 bg-zinc-50 dark:bg-zinc-900/40">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-14">
+          <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Technologies &amp; Architecture</p>
+          <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white">Tech Stack</h2>
+          <p class="reveal d2 text-zinc-500 dark:text-zinc-400 mt-3 max-w-2xl">Modular production architecture and technical engines powering the Medical Report Extract AI system — engineered for high-precision extraction, low latency, and zero hallucination.</p>
+        </div>
+
+        <!-- System Architecture & Pipeline Matrix -->
+        <div class="reveal d1 mb-14 overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+          <div class="p-6 md:p-8 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <span class="text-xs font-medium text-accent tracking-widest uppercase">System Blueprint</span>
+              <h3 class="font-display font-bold text-2xl text-zinc-900 dark:text-white mt-1">Medical Report Intelligence Pipeline</h3>
+            </div>
+            <span class="inline-flex items-center gap-1.5 text-xs bg-green-50 dark:bg-zinc-800 text-green-600 dark:text-green-400 border border-green-200 dark:border-zinc-700 px-3 py-1.5 rounded-full font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+              Production Ready Stack
+            </span>
+          </div>
+
+          <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
+            <!-- 1. PDF Reader -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">01</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">PDF Reader</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">PyMuPDF (fitz)</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Extracts text, visual rows, bounding boxes</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Spatial Parsing</span>
+              </div>
+            </div>
+
+            <!-- 2. Retrieval Engine -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">02</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">Retrieval Engine</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">TF-IDF + Scikit-Learn</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Ranks top candidate pages</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Page Ranking</span>
+              </div>
+            </div>
+
+            <!-- 3. Reasoning LLM -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors bg-accent/[0.02]">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-accent text-white flex items-center justify-center font-mono text-xs font-bold shrink-0">03</span>
+                <div>
+                  <p class="text-xs font-medium text-accent uppercase tracking-wider">Reasoning LLM</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">Google Gemini API</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-700 dark:text-zinc-300 font-medium">Structured JSON answer &amp; matched_line</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full font-mono font-medium">LLM Intelligence</span>
+              </div>
+            </div>
+
+            <!-- 4. Bounding Box Locator -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">04</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">Bounding Box Locator</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">Row Alignment Engine</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Maps matched_line to parent_row_bbox</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Spatial Math</span>
+              </div>
+            </div>
+
+            <!-- 5. Cropper Engine -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">05</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">Cropper Engine</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">Pillow + PyMuPDF Pixmap</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Renders 2.5x PNG crop with green highlight</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Visual Snippets</span>
+              </div>
+            </div>
+
+            <!-- 6. Backend -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">06</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">Backend</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">FastAPI + Uvicorn</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">REST API backend server</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Async API</span>
+              </div>
+            </div>
+
+            <!-- 7. Frontend -->
+            <div class="p-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+              <div class="flex items-center gap-4 min-w-[220px]">
+                <span class="w-9 h-9 rounded-xl bg-orange-50 dark:bg-zinc-800 text-accent flex items-center justify-center font-mono text-xs font-bold shrink-0">07</span>
+                <div>
+                  <p class="text-xs font-medium text-zinc-400 uppercase tracking-wider">Frontend</p>
+                  <p class="font-display font-bold text-base text-zinc-900 dark:text-white">React + Vite + Tailwind</p>
+                </div>
+              </div>
+              <div class="flex-1 md:px-6">
+                <p class="text-sm text-zinc-600 dark:text-zinc-400">Responsive user web dashboard</p>
+              </div>
+              <div class="shrink-0">
+                <span class="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-3 py-1 rounded-full font-mono">Modern UI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics & Badges Grid -->
+        <div class="grid md:grid-cols-2 gap-12 items-start">
+          <div class="reveal space-y-6" id="prof-section">
+            <h4 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-2">Engine Proficiency &amp; Benchmark</h4>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Google Gemini API (Reasoning &amp; JSON)</span>
+                <span class="text-xs text-zinc-400 font-mono">95%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:95%" data-width="95%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PyMuPDF / fitz (PDF Reader &amp; Spatial Rows)</span>
+                <span class="text-xs text-zinc-400 font-mono">92%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:92%" data-width="92%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Row Alignment Engine (BBox Localization)</span>
+                <span class="text-xs text-zinc-400 font-mono">90%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:90%" data-width="90%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">TF-IDF + Scikit-Learn (Candidate Page Ranking)</span>
+                <span class="text-xs text-zinc-400 font-mono">88%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:88%" data-width="88%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">FastAPI + Uvicorn (REST API Backend)</span>
+                <span class="text-xs text-zinc-400 font-mono">86%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:86%" data-width="86%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">React + Vite + Tailwind (User Dashboard)</span>
+                <span class="text-xs text-zinc-400 font-mono">85%</span>
+              </div>
+              <div class="prof-bar">
+                <div class="prof-bar-fill" style="--w:85%" data-width="85%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal d2">
+            <h4 class="font-display font-bold text-lg text-zinc-900 dark:text-white mb-6">Core Technologies</h4>
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-zinc-800 flex items-center justify-center text-xl">♊</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Gemini API</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-red-50 dark:bg-zinc-800 flex items-center justify-center text-xl">📄</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">PyMuPDF</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-zinc-800 flex items-center justify-center text-xl">📊</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Scikit-Learn</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-zinc-800 flex items-center justify-center text-xl">⚡</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">FastAPI</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-zinc-800 flex items-center justify-center text-xl">🦄</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Uvicorn</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-green-50 dark:bg-zinc-800 flex items-center justify-center text-xl">🖼️</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Pillow</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-zinc-800 flex items-center justify-center text-xl">⚛️</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">React</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-yellow-50 dark:bg-zinc-800 flex items-center justify-center text-xl">⚡</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Vite</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-zinc-800 flex items-center justify-center text-xl">🎨</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Tailwind</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-zinc-800 flex items-center justify-center text-xl">🐍</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Python 3</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-zinc-800 flex items-center justify-center text-xl">📐</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">Row Engine</span>
+              </div>
+              <div class="tech-badge bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 flex flex-col items-center gap-2 text-center">
+                <div class="w-10 h-10 rounded-xl bg-pink-50 dark:bg-zinc-800 flex items-center justify-center text-xl">📋</div>
+                <span class="text-xs font-medium text-zinc-600 dark:text-zinc-400">JSON Schema</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section id="about" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+
+          <div class="reveal order-2 md:order-1">
+            <div class="relative max-w-sm mx-auto">
+              <!-- AI stats visual card replacing photo -->
+              <div
+                class="w-full aspect-square rounded-3xl bg-zinc-900 dark:bg-zinc-800 border border-zinc-800 p-8 flex flex-col justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center text-xl">🤖</div>
+                  <div>
+                    <p class="font-display font-bold text-white text-sm">Harish Vivin</p>
+                    <p class="text-xs text-zinc-400">AI Engineer</p>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 my-6">
+                  <div class="bg-zinc-800 rounded-2xl p-4">
+                    <p class="font-display font-bold text-2xl text-accent">Gemini</p>
+                    <p class="text-xs text-zinc-400 mt-1">Reasoning &amp; JSON</p>
+                  </div>
+                  <div class="bg-zinc-800 rounded-2xl p-4">
+                    <p class="font-display font-bold text-2xl text-accent">PyMuPDF</p>
+                    <p class="text-xs text-zinc-400 mt-1">Spatial PDF OCR</p>
+                  </div>
+                  <div class="bg-zinc-800 rounded-2xl p-4">
+                    <p class="font-display font-bold text-2xl text-accent">FastAPI</p>
+                    <p class="text-xs text-zinc-400 mt-1">Uvicorn REST API</p>
+                  </div>
+                  <div class="bg-zinc-800 rounded-2xl p-4">
+                    <p class="font-display font-bold text-2xl text-accent">React</p>
+                    <p class="text-xs text-zinc-400 mt-1">Vite + Tailwind</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-zinc-400">
+                  <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                  Open to AI roles
+                </div>
+              </div>
+              <div
+                class="absolute -bottom-6 -right-4 bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-4 shadow-xl">
+                <p class="text-xs text-zinc-500 mb-1">Currently exploring</p>
+                <p class="font-display font-bold text-sm text-zinc-900 dark:text-white">Multimodal AI &amp; Agents 🤖
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-1 md:order-2">
+            <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">About me</p>
+            <h2
+              class="reveal d1 font-display font-bold text-4xl md:text-5xl text-zinc-900 dark:text-white leading-tight mb-6">
+              A bit about<br>who I am</h2>
+            <p class="reveal d2 text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4">
+              I'm <strong class="font-semibold text-zinc-700 dark:text-zinc-300">Harish Vivin</strong>, an AI Engineer
+              passionate about building intelligent systems that make a real impact. I thrive at the intersection of
+              cutting-edge AI research and practical software engineering.
+            </p>
+            <p class="reveal d3 text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8">
+              My focus is on LLMs, Retrieval-Augmented Generation, and end-to-end ML pipelines. I believe the best AI
+              systems are reliable, explainable, and actually deployed — not just Jupyter notebooks. When I'm not
+              coding, I'm reading the latest papers on arXiv or experimenting with open-source models.
+            </p>
+            <div class="reveal d4">
+              <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-3">Core Skills
+              </p>
+              <div class="flex flex-wrap gap-2" role="list" aria-label="Skills">
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Google Gemini API</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">PyMuPDF (fitz)</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Scikit-Learn</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">TF-IDF Retrieval</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">FastAPI</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Uvicorn</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Pillow + Pixmap</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">React + Vite</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Tailwind CSS</span>
+                <span role="listitem"
+                  class="stag text-sm bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full cursor-default">Row Alignment Engine</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section id="contact" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="bg-zinc-900 dark:bg-zinc-800 rounded-3xl p-10 md:p-16 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl pointer-events-none"
+            aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl pointer-events-none"
+            aria-hidden="true"></div>
+
+          <div class="relative z-10 grid md:grid-cols-2 gap-12 items-start">
+
+            <div>
+              <p class="reveal text-xs font-medium text-accent tracking-widest uppercase mb-3">Get in touch</p>
+              <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-5">Let's
+                build<br>with AI together</h2>
+              <p class="reveal d2 text-zinc-400 leading-relaxed mb-8">I'm open to AI engineering roles, freelance
+                projects, and research collaborations. Whether it's an LLM pipeline, an ML system, or just a great AI
+                idea — let's talk.</p>
+
+              <div class="reveal d3 flex flex-col gap-4">
+                <a href="mailto:harishvivin@email.com" id="email-link"
+                  class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">harishvivin123@email.com</span>
+                </a>
+                <a href="https://linkedin.com/in/harishvivin" id="linkedin-link" rel="noopener noreferrer"
+                  target="_blank"
+                  class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">linkedin.com/in/harishvivin</span>
+                </a>
+                <a href="https://github.com/harishvivin" id="github-link" rel="noopener noreferrer" target="_blank"
+                  class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors">
+                  <span
+                    class="w-9 h-9 flex items-center justify-center bg-zinc-800 rounded-lg group-hover:bg-accent/20 transition-colors shrink-0">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                  </span>
+                  <span class="text-sm">github.com/harishvivin</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="reveal d2">
+              <form action="#" method="POST" novalidate>
+                <div class="flex flex-col gap-4">
+                  <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label for="fname" class="block text-xs font-medium text-zinc-400 mb-1.5">Name <span
+                          aria-hidden="true">*</span></label>
+                      <input type="text" id="fname" name="name" placeholder="Jane Smith" required autocomplete="name"
+                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                    </div>
+                    <div>
+                      <label for="femail" class="block text-xs font-medium text-zinc-400 mb-1.5">Email <span
+                          aria-hidden="true">*</span></label>
+                      <input type="email" id="femail" name="email" placeholder="jane@company.com" required
+                        autocomplete="email"
+                        class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="fsubject" class="block text-xs font-medium text-zinc-400 mb-1.5">Subject</label>
+                    <input type="text" id="fsubject" name="subject" placeholder="AI project collaboration"
+                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors">
+                  </div>
+                  <div>
+                    <label for="fmessage" class="block text-xs font-medium text-zinc-400 mb-1.5">Message <span
+                        aria-hidden="true">*</span></label>
+                    <textarea id="fmessage" name="message" rows="4" placeholder="Tell me about your AI project..."
+                      required
+                      class="w-full bg-zinc-800 border border-zinc-700 text-white text-sm rounded-xl px-4 py-3 placeholder-zinc-600 focus:outline-none focus:border-accent transition-colors resize-none"></textarea>
+                  </div>
+                  <button type="submit" id="contact-submit"
+                    class="shimmer w-full bg-accent text-white font-display font-bold text-sm py-3.5 rounded-xl hover:bg-accent-light transition-colors">
+                    Send message →
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-100 dark:border-zinc-900">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-zinc-400">© <span id="yr"></span> <strong class="text-zinc-600 dark:text-zinc-300">Harish
+          Vivin</strong>. AI Engineer. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="text-sm text-zinc-400 hover:text-accent transition-colors nl">Back to top ↑</a>
+        <a href="https://github.com/harishvivin" target="_blank" rel="noopener noreferrer"
+          class="text-zinc-400 hover:text-accent transition-colors">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function app() {
+      return {
+        dark: false,
+        mm: false,
+        sc: false,
+        s: '',
+
+        init() {
+          // persist dark mode
+          this.dark = localStorage.getItem('dark') === 'true';
+          this.$watch('dark', v => localStorage.setItem('dark', v));
+
+          // scroll spy
+          window.addEventListener('scroll', () => {
+            this.sc = window.scrollY > 20;
+            const sections = ['expertise', 'projects', 'stack', 'about', 'contact'];
+            for (const id of sections) {
+              const el = document.getElementById(id);
+              if (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) { this.s = id; break; }
+              }
+            }
+          }, { passive: true });
+
+          // reveal on scroll
+          const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+          }, { threshold: 0.12 });
+          document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+          // animate proficiency bars
+          const barObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                e.target.querySelectorAll('.prof-bar-fill').forEach(bar => bar.classList.add('animated'));
+                barObs.unobserve(e.target);
+              }
+            });
+          }, { threshold: 0.3 });
+          const profSection = document.getElementById('prof-section');
+          if (profSection) barObs.observe(profSection);
+
+          // year
+          document.getElementById('yr').textContent = new Date().getFullYear();
+
+          // typing animation
+          this.startTyping();
+
+          // neural network canvas
+          this.initNeuralCanvas();
+        },
+
+        startTyping() {
+          const phrases = ['AI Engineer', 'ML Researcher', 'LLM Builder', 'AI Agent Developer'];
+          let phraseIdx = 0, charIdx = 0, deleting = false;
+          const el = document.getElementById('typing-text');
+          if (!el) return;
+          function type() {
+            const phrase = phrases[phraseIdx];
+            if (!deleting) {
+              el.textContent = phrase.slice(0, ++charIdx);
+              if (charIdx === phrase.length) { deleting = true; setTimeout(type, 1800); }
+              else { setTimeout(type, 90); }
+            } else {
+              el.textContent = phrase.slice(0, --charIdx);
+              if (charIdx === 0) { deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; setTimeout(type, 400); }
+              else { setTimeout(type, 45); }
+            }
+          }
+          type();
+        },
+
+        initNeuralCanvas() {
+          const canvas = document.getElementById('neural-canvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+          let W, H, nodes = [], animId;
+
+          function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+          }
+
+          function makeNode() {
+            return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4, r: Math.random() * 2 + 1.5 };
+          }
+
+          function init() {
+            resize();
+            nodes = [];
+            const n = Math.min(Math.floor((W * H) / 14000), 60);
+            for (let i = 0; i < n; i++) nodes.push(makeNode());
+          }
+
+          function draw() {
+            ctx.clearRect(0, 0, W, H);
+            const maxDist = 140;
+            nodes.forEach(n => {
+              n.x += n.vx; n.y += n.vy;
+              if (n.x < 0 || n.x > W) n.vx *= -1;
+              if (n.y < 0 || n.y > H) n.vy *= -1;
+            });
+            for (let i = 0; i < nodes.length; i++) {
+              for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < maxDist) {
+                  ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+                  ctx.strokeStyle = 'rgba(255,107,43,' + (0.18 * (1 - dist / maxDist)) + ')';
+                  ctx.lineWidth = 1; ctx.stroke();
+                }
+              }
+            }
+            nodes.forEach(n => {
+              ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(255,107,43,0.45)'; ctx.fill();
+            });
+            animId = requestAnimationFrame(draw);
+          }
+
+          init(); draw();
+          window.addEventListener('resize', () => { cancelAnimationFrame(animId); init(); draw(); });
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>
