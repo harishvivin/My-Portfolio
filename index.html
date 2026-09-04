@@ -414,51 +414,50 @@
           </div>
 
           <div class="reveal d2 flex justify-center md:justify-end">
-            <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+            <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-[26rem] lg:h-[26rem]">
               <!-- animated ring borders -->
               <div class="absolute -inset-3 rounded-3xl border border-accent/20 animate-pulse"></div>
               <div class="absolute -inset-6 rounded-3xl border border-accent/10"></div>
-              <!-- AI code visual card -->
-              <div
-                class="w-full h-full rounded-3xl glow-accent bg-zinc-900 dark:bg-zinc-800 border border-zinc-800 flex flex-col overflow-hidden">
+
+              <!-- Live Terminal Card -->
+              <div id="terminal-card"
+                class="w-full h-full rounded-3xl glow-accent bg-[#0d1117] border border-zinc-800 flex flex-col overflow-hidden shadow-2xl">
+
                 <!-- terminal top bar -->
-                <div class="flex items-center gap-1.5 px-4 py-3 bg-zinc-950/60 border-b border-zinc-800 shrink-0">
-                  <span class="w-3 h-3 rounded-full bg-red-500/70"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500/70"></span>
-                  <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
-                  <span class="ml-3 text-xs text-zinc-500 font-mono">ai_engineer.py</span>
+                <div class="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-zinc-800 shrink-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 cursor-pointer transition-colors"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-500 cursor-pointer transition-colors"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-500 cursor-pointer transition-colors"></span>
+                  </div>
+                  <span class="text-xs text-zinc-500 font-mono tracking-wide">ai_engineer.py</span>
+                  <div class="flex items-center gap-1.5">
+                    <span id="term-run-btn" class="text-xs text-green-400 font-mono px-2 py-0.5 rounded border border-green-800/60 bg-green-950/40 cursor-pointer hover:bg-green-900/60 transition-colors select-none" title="Re-run">▶ run</span>
+                  </div>
                 </div>
-                <!-- code body -->
-                <div class="flex-1 p-5 font-mono text-xs leading-6 overflow-hidden select-none" aria-hidden="true">
-                  <p><span class="text-purple-400">from</span> <span class="text-zinc-300">google</span> <span
-                      class="text-purple-400">import</span> <span class="text-yellow-300">genai</span></p>
-                  <p><span class="text-purple-400">import</span> <span class="text-zinc-300">fitz</span><span
-                      class="text-zinc-500">, sklearn, fastapi</span></p>
-                  <p class="mt-2"><span class="text-zinc-600"># build intelligent systems</span></p>
-                  <p><span class="text-blue-400">class</span> <span class="text-yellow-300">HarishVivin</span><span
-                      class="text-zinc-300">(AIEngineer):</span></p>
-                  <p class="pl-4"><span class="text-blue-400">def</span> <span
-                      class="text-green-400">__init__</span><span class="text-zinc-300">(self):</span></p>
-                  <p class="pl-8 text-zinc-400">self.stack = [</p>
-                  <p class="pl-12"><span class="text-orange-400">"Gemini API"</span><span class="text-zinc-500">,
-                    </span><span class="text-orange-400">"PyMuPDF"</span><span class="text-zinc-500">,</span></p>
-                  <p class="pl-12"><span class="text-orange-400">"TF-IDF"</span><span class="text-zinc-500">,
-                    </span><span class="text-orange-400">"FastAPI"</span><span class="text-zinc-500">,</span></p>
-                  <p class="pl-12"><span class="text-orange-400">"React+Vite"</span><span class="text-zinc-500">,
-                    </span><span class="text-orange-400">"Pillow"</span></p>
-                  <p class="pl-8 text-zinc-400">]</p>
-                  <p class="pl-4 mt-1"><span class="text-blue-400">def</span> <span
-                      class="text-green-400">build</span><span class="text-zinc-300">(self, idea):</span></p>
-                  <p class="pl-8 text-zinc-400"><span class="text-purple-400">return</span> <span
-                      class="text-orange-400">"Medical Report AI"</span> <span class="text-accent">✓</span></p>
-                  <p class="mt-3 text-accent animate-pulse">█</p>
+
+                <!-- line numbers + code area -->
+                <div class="flex flex-1 overflow-hidden">
+                  <!-- line number gutter -->
+                  <div id="term-gutter" class="flex flex-col items-end px-3 pt-4 pb-4 text-zinc-700 font-mono text-[10px] leading-[1.65] select-none shrink-0 bg-[#0d1117] border-r border-zinc-800/50 min-w-[28px]">
+                  </div>
+                  <!-- code lines -->
+                  <div id="term-code" class="flex-1 p-4 font-mono text-[10px] leading-[1.65] overflow-hidden relative">
+                  </div>
+                </div>
+
+                <!-- status bar -->
+                <div class="flex items-center justify-between px-4 py-1.5 bg-accent text-white text-[9px] font-mono shrink-0">
+                  <span id="term-status">● Initializing…</span>
+                  <span>Python 3.12 · UTF-8</span>
                 </div>
               </div>
+
+              <!-- floating badges -->
               <div
                 class="absolute -bottom-4 -left-4 bg-accent text-white font-display font-bold text-xs px-4 py-2.5 rounded-2xl shadow-lg flex items-center gap-2">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
                 </svg>
                 AI Engineer
               </div>
@@ -468,6 +467,153 @@
               </div>
             </div>
           </div>
+
+          <style>
+            @keyframes termFadeIn { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:none; } }
+            .term-line { animation: termFadeIn .18s ease both; }
+            #term-cursor { display:inline-block; width:6px; height:.9em; background:#ff6b2b; vertical-align:text-bottom; animation: termBlink .75s steps(1) infinite; border-radius:1px; }
+            @keyframes termBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+            .term-output { border-top: 1px solid rgba(255,107,43,.25); margin-top:4px; padding-top:4px; }
+          </style>
+
+          <script>
+          (function(){
+            // Token colour map
+            const KW   = s => `<span style="color:#ff7b72">${s}</span>`;      // keyword
+            const KW2  = s => `<span style="color:#79c0ff">${s}</span>`;      // class/def
+            const FN   = s => `<span style="color:#d2a8ff">${s}</span>`;      // function name
+            const STR  = s => `<span style="color:#a5d6ff">${s}</span>`;      // string
+            const CMT  = s => `<span style="color:#8b949e;font-style:italic">${s}</span>`;
+            const OP   = s => `<span style="color:#ff6b2b">${s}</span>`;      // accent / operator
+            const VAR  = s => `<span style="color:#ffa657">${s}</span>`;      // var / attribute
+            const NRM  = s => `<span style="color:#c9d1d9">${s}</span>`;      // normal
+
+            // Lines: [indent, html-content, delay-ms-extra]
+            const LINES = [
+              [0, KW('from')+' '+NRM('google')+' '+KW('import')+' '+FN('generativeai'), 0],
+              [0, KW('import')+' '+NRM('fitz')+NRM(', sklearn, fastapi'), 0],
+              [0, KW('import')+' '+NRM('pillow, uvicorn'), 0],
+              [0, '', 0],
+              [0, CMT('# ── Harish Vivin  ·  AI Engineer ──'), 0],
+              [0, KW2('class')+' '+FN('HarishVivin')+'('+NRM('AIEngineer')+'):', 0],
+              [1, KW2('def')+' '+FN('__init__')+'('+VAR('self')+'):', 0],
+              [2, VAR('self')+'.stack = [', 0],
+              [3, STR('"Gemini API"')+NRM(', ')+STR('"PyMuPDF"')+NRM(','), 0],
+              [3, STR('"TF-IDF"')+NRM(', ')+STR('"FastAPI"')+NRM(','), 0],
+              [3, STR('"React+Vite"')+NRM(', ')+STR('"Pillow"'), 0],
+              [2, ']', 0],
+              [0, '', 0],
+              [1, KW2('def')+' '+FN('build')+'('+VAR('self')+', '+VAR('idea')+'):', 0],
+              [2, KW('return')+' '+STR('"Medical Report AI"')+' '+OP('✓'), 350],
+            ];
+
+            const OUTPUT = [
+              { text:'>>> h = HarishVivin()', color:'#8b949e' },
+              { text:'>>> h.build("MRIS")',   color:'#8b949e' },
+              { text:'"Medical Report AI" ✓', color:'#3fb950', bold:true },
+            ];
+
+            const INDENT = 4; // spaces per level
+
+            const codeEl   = document.getElementById('term-code');
+            const gutterEl = document.getElementById('term-gutter');
+            const statusEl = document.getElementById('term-status');
+            const runBtn   = document.getElementById('term-run-btn');
+
+            let lineNum = 1;
+
+            function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+            function addLine(indent, html, lnum){
+              // gutter
+              const g = document.createElement('div');
+              g.textContent = lnum === null ? '' : lnum;
+              gutterEl.appendChild(g);
+
+              // code line
+              const l = document.createElement('div');
+              l.className = 'term-line';
+              const spaces = '&nbsp;'.repeat(indent * INDENT);
+              l.innerHTML = spaces + (html || '&nbsp;');
+              codeEl.appendChild(l);
+            }
+
+            function addOutput(item){
+              const g = document.createElement('div');
+              g.textContent = '';
+              gutterEl.appendChild(g);
+
+              const l = document.createElement('div');
+              l.className = 'term-line term-output';
+              l.style.cssText = `color:${item.color};${item.bold?'font-weight:600':''}`;
+              l.textContent = item.text;
+              codeEl.appendChild(l);
+            }
+
+            // Cursor element inside code area
+            const cursorEl = document.createElement('span');
+            cursorEl.id = 'term-cursor';
+
+            function clearTerminal(){
+              codeEl.innerHTML = '';
+              gutterEl.innerHTML = '';
+              codeEl.appendChild(cursorEl);
+              lineNum = 1;
+            }
+
+            function runAnimation(){
+              clearTerminal();
+              statusEl.textContent = '● Typing…';
+              runBtn.style.opacity = '0.4';
+              runBtn.style.pointerEvents = 'none';
+
+              let i = 0;
+              const baseDelay = 80;
+
+              function typeNext(){
+                if(i >= LINES.length){
+                  // output phase
+                  let oi = 0;
+                  function outNext(){
+                    if(oi >= OUTPUT.length){
+                      statusEl.textContent = '✓ Done  —  0 errors';
+                      runBtn.style.opacity = '';
+                      runBtn.style.pointerEvents = '';
+                      return;
+                    }
+                    const item = OUTPUT[oi++];
+                    addOutput(item);
+                    codeEl.appendChild(cursorEl); // keep cursor at end
+                    codeEl.scrollTop = codeEl.scrollHeight;
+                    setTimeout(outNext, 320);
+                  }
+                  statusEl.textContent = '● Running…';
+                  setTimeout(outNext, 250);
+                  return;
+                }
+                const [indent, html, extra] = LINES[i++];
+                addLine(indent, html, lineNum++);
+                codeEl.appendChild(cursorEl);
+                codeEl.scrollTop = codeEl.scrollHeight;
+                setTimeout(typeNext, baseDelay + extra);
+              }
+
+              typeNext();
+            }
+
+            // Auto-start when card enters viewport
+            const observer = new IntersectionObserver(entries => {
+              if(entries[0].isIntersecting){
+                observer.disconnect();
+                setTimeout(runAnimation, 600);
+              }
+            }, { threshold: 0.4 });
+            observer.observe(document.getElementById('terminal-card'));
+
+            // Manual re-run
+            runBtn.addEventListener('click', runAnimation);
+          })();
+          </script>
 
         </div>
       </div>
